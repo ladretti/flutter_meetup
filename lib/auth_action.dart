@@ -20,6 +20,7 @@ class AuthAction extends StatelessWidget {
               onPressed: () {
                 !loggedIn ? context.push('/sign-in') : signOut();
               },
+              highlighted: true,
               child:
                   !loggedIn ? const Text('RSVP') : const Text('Déconnexion')),
         ),
@@ -31,6 +32,7 @@ class AuthAction extends StatelessWidget {
               onPressed: () {
                 context.push('/profile');
               },
+              highlighted: true,
               child: const Text('Profile'),
             ),
           ),

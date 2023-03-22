@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_meetup/yes_no_selection.dart';
 import 'package:provider/provider.dart';
 
 import 'app_state.dart';
@@ -44,11 +45,23 @@ class HomePage extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (appState.attendees >= 2)
+                  Paragraph('${appState.attendees} participants')
+                else if (appState.attendees == 1)
+                  const Paragraph('1 participant')
+                else
+                  const Paragraph('Aucun participant'),
                 if (appState.loggedIn) ...[
+                  YesNoSelection(
+                    state: appState.attending,
+                    onSelection: (attending) => appState.attending = attending,
+                  ),
                   const Header('Discussion'),
                   GuestBook(
-                      addMessage: (message) =>
-                          appState.addMessageToGuestBook(message)),
+                    addMessage: (message) =>
+                        appState.addMessageToGuestBook(message),
+                    messages: appState.guestBookMessages,
+                  ),
                 ],
               ],
             );
